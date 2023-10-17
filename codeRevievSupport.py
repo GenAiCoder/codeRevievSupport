@@ -5,18 +5,34 @@ from tkinter import Tk, Entry, Text, Button, Label, Scrollbar, END
 # Funkcje związane z logiką działania
 
 def get_last_commit_code(repo_url):
-    # ... (pobierz ostatni commit i kod z głównej gałęzi)
-    pass
+    return ["First line of code", "secound line of code"]
 
 def send_code_to_gpt(code):
-    # ... (skomunikuj się z OpenAI API)
-    return ["First line of code", "secound line of code"]
+    return '''{
+    "comments": [
+        {
+            "lineNumber": 1,
+            "comment": "Początek pliku, importy"
+        },
+        {
+            "lineNumber": 5,
+            "comment": "Funkcja główna programu"
+        },
+        {
+            "lineNumber": 12,
+            "comment": "Pętla przetwarzająca dane"
+        },
+        {
+            "lineNumber": 18,
+            "comment": "Zapis wyników do pliku"
+        }
+    ]
+}'''
 
 def add_comments_on_github(comments):
     # ... (dodaj komentarze do repozytorium)
     pass
 
-# Klasa dla GUI
 
 class CodeReviewerGUI:
     def __init__(self):
@@ -50,8 +66,7 @@ class CodeReviewerGUI:
         repo_url = self.repo_entry.get()
         code = get_last_commit_code(repo_url)
         comments = send_code_to_gpt(code)
-        for comment in comments:
-            self.comments_text.insert(END, comment + '\n\n')
+        self.comments_text.insert(END, comments + '\n\n')
             
     def submit_to_github(self):
         comments = self.comments_text.get("1.0", END).strip().split('\n\n')
